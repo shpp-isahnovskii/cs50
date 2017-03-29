@@ -22,14 +22,14 @@ void row_builder(int static_pyramide_height, int local_pyramide_height)
 {
     for (int i = 0; i < local_pyramide_height + 1 - N_BLOKS_AT_TOP; i++)
     {
-        printf("-");
+        printf(" ");
     }
     for(int n = 0; n < static_pyramide_height * 2 - local_pyramide_height * 2 + N_BLOKS_AT_TOP * 2; n++) //more comfortable, add "..* 2;"
     {
         printf("#");
         if(n == static_pyramide_height - local_pyramide_height + 1)  //more comfortable, add "if()"
         {
-            printf("^^");
+            printf("  ");
         }
     }
 
