@@ -2,10 +2,10 @@
 #include <stdio.h>
 
 const int PYRAMID_MAX_HEIGHT = 23;
-const int N_BLOKS_AT_TOP = 2;
+const int BLOKS_AT_TOP = 1;  //changeable
+const int ADD_WALL_MIRROR = 2; //changeable 1 or 2
 
-
-int get_height()
+int getHeight()
 {
     int height;
     do
@@ -17,17 +17,16 @@ int get_height()
     return (height);
 }
 //====================================================================== patern
-void row_builder(int static_pyramide_height, int local_pyramide_height)
-
+void buildRow(int static_pyramide_height, int local_pyramide_height)
 {
-    for (int i = 0; i < local_pyramide_height + 1 - N_BLOKS_AT_TOP; i++)
+    for (int i = 0; i < local_pyramide_height - 1; i++) // -1 to clear one top section for a brick
     {
         printf(" ");
     }
-    for(int n = 0; n < static_pyramide_height * 2 - local_pyramide_height * 2 + N_BLOKS_AT_TOP * 2; n++) //more comfortable, add "..* 2;"
+    for(int n = 0; n < (static_pyramide_height - local_pyramide_height + BLOKS_AT_TOP) * ADD_WALL_MIRROR ; n++)
     {
         printf("#");
-        if(n == static_pyramide_height - local_pyramide_height + 1)  //more comfortable, add "if()"
+        if(ADD_WALL_MIRROR == 2 && n == static_pyramide_height - local_pyramide_height + BLOKS_AT_TOP -1)
         {
             printf("  ");
         }
@@ -42,13 +41,13 @@ void printPyramide(int static_pyramide_height) //
     
     for(int h = 0; h < static_pyramide_height; h++)
     {
-        row_builder(static_pyramide_height, local_pyramide_height);
+        buildRow(static_pyramide_height, local_pyramide_height);
         local_pyramide_height--;
     }  
 }
 //====================================================================== 
 int main()
 {
-    printPyramide(get_height());
+    printPyramide(getHeight());
     return 0;
 }

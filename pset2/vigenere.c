@@ -4,12 +4,12 @@
 #include <ctype.h>
 #include <stdlib.h>
 
-/*to decode your Vigenere: change LOWER, UPPER cases 'A','a' to 'Z', 'z' and change vigenereCode (symbol + (tolower(key)) to - */
+/*to decode your Vigenere: change LOWER, UPPER cases from 'A','a' to 'Z','z'; change makeVigenereCode (symbol + (tolower(key)) to - */
 
-const int UPPERCASE = 'A';
-const int LOWERCASE = 'a';
-const int ACII_KEY_A ='a'; //use it for decoding (useles in normal version)
-const int ALPHABET = 26;
+const int UPPERCASE_A = 'A';
+const int LOWERCASE_A = 'a';
+const int ACII_LITTLE_A ='a'; //use it for decoding
+const int CHARS_IN_ALPHABET = 26;
 const int VALID_INPUTS = 2;
 //=======================================================================
 int checkValidation(int count, string cipher_word)
@@ -45,22 +45,22 @@ int checkCase(char symbol)
     int answer;
     if(isupper(symbol))
     {
-        answer = UPPERCASE;
+        answer = UPPERCASE_A;
     }
     else
     {
-        answer = LOWERCASE;
+        answer = LOWERCASE_A;
     }
     return answer;
 }
 //======================================================================= formula
 //TODO: switch from '97, 99' to '0, 1..', next % 26 then return to ASCII.
-int vigenereCode(char symbol, char key)
+int makeVigenereCode(char symbol, char key)
 {
-    return ( (symbol + (tolower(key) - ACII_KEY_A) - checkCase(symbol) ) % ALPHABET + checkCase(symbol) );
+    return ( (symbol + (tolower(key) - ACII_LITTLE_A) - checkCase(symbol) ) % CHARS_IN_ALPHABET + checkCase(symbol) );
 }
 //=======================================================================
-void vigenerePrint(string text, string key)
+void printVigenere(string text, string key)
 {
     printf("ciphertext: ");
     int i = 0, n = 0;
@@ -68,7 +68,7 @@ void vigenerePrint(string text, string key)
     {
         if(isalpha(text[i]))
         {
-            printf("%c", vigenereCode(text[i], key[n %strlen(key)])); //change all key inputs to lowercase
+            printf("%c", makeVigenereCode(text[i], key[n %strlen(key)])); //change all key inputs to LOWERCASE_A
             n++;
         }
         else
@@ -87,10 +87,6 @@ int main(int argc, string argv[])
         printf("Usage: ./vigenere k \n");
         return 1;
     }
-    vigenerePrint(getPlainText(), argv[1]);
+    printVigenere(getPlainText(), argv[1]);
     return 0;
 }
-
-/*$ ./vigenere bacon
-plaintext: Meet me at the park at eleven am
-ciphertext: Negh zf av huf pcfx bt gzrwep oz*/
